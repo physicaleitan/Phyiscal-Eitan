@@ -6,11 +6,26 @@ const cors = require("cors");
 // יצירת אפליקציה של Express
 const app = express();
 
-// שימוש במידלווארים
+
+const allowedOrigins = [
+  'https://phyiscal-eitan.vercel.app', // פרונט בפרודקשן
+  'http://localhost:3000'              // פיתוח מקומי
+];
+
+app.use(cors({
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true,
+}));
+
 app.use(express.json());
 app.use(cors());
 
-// חיבור למסד הנתונים
 mongoose
   .connect(process.env.MONGO_URI)
   .then(() => console.log("✅ Connected to MongoDB"))
@@ -30,6 +45,4 @@ app.use("/api/subjects", subjectRoutes);
 
 
 // הפעלת השרת
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
-
+module.exports = app;

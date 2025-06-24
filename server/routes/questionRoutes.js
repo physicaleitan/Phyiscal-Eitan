@@ -1,10 +1,13 @@
 const express = require("express");
 const router = express.Router();
-const multer = require('multer');
-const upload = multer({ dest: 'uploads/' });
+
+// ✅ Use in-memory storage instead of writing to disk (Vercel is read-only)
+const multer = require("multer");
+const upload = multer({ storage: multer.memoryStorage() });
+
 const { verifyToken, verifyAdmin, verifyAdminOrTeacher } = require("../middleware/authMiddleware");
-const myCache = require("../utils/cache"); // ייבוא הקאש
-const Question = require("../models/Question"); // נדרש עבור הפונקציה הפנימית בפנדינג
+const myCache = require("../utils/cache");
+const Question = require("../models/Question");
 const {
   uploadQuestion,
   deleteQuestion,
@@ -19,11 +22,13 @@ const {
   nextQuestion,
   getAllUnapprovedQuestions,
   getAllApprovedQuestions,
-  getQuestionsBySubject
+  getQuestionsBySubject,
+  uploadQuestionImage
 } = require("../controllers/questionController");
-const { uploadQuestionImage } = require("../controllers/questionController");
 
-console.log("✅ Routes loaded!"); // לוודא שהנתיב נטען
+console.log("✅ Routes loaded!");
+
+// ✅ Image upload
 router.post("/upload-image", verifyToken, upload.single("image"), uploadQuestionImage);
 
 // 📌 אישור שאלה
@@ -36,7 +41,7 @@ router.put("/approve", (req, res, next) => {
 router.post("/", verifyToken, uploadQuestion);
 
 // 📌 מחיקת שאלה
-router.delete("/:id", verifyToken,deleteQuestion);
+router.delete("/:id", verifyToken, deleteQuestion);
 
 // 📌 עריכת שאלה
 router.put("/:id", editQuestion);
@@ -44,7 +49,7 @@ router.put("/:id", editQuestion);
 // 📌 שליפת כל השאלות שלא אושרו
 router.get("/unapproved", getAllUnapprovedQuestions);
 
-// 📌 שליפת כל השאלות המאושרות (לפי צורך)
+// 📌 שליפת כל השאלות המאושרות
 router.get("/approved", getAllApprovedQuestions);
 
 // 📌 שליפת שאלות לפי נושא
@@ -86,13 +91,16 @@ router.get("/:id", async (req, res, next) => {
       console.log("Returning question from cache...");
       return res.status(200).json(cachedQuestion);
     }
-    await getQuestion(req, res); // נדרש לוודא שהפונקציה קיימת בקונטרולר
+    await getQuestion(req, res);
   } catch (error) {
     next(error);
   }
 });
-router.get("/by-tag/:tag", verifyToken ,getQuestionsByTag);
-// 📌 (אופציונלי) שליפת שאלות בפורמט 'pending'
+
+// 📌 שליפת שאלות לפי תגית
+router.get("/by-tag/:tag", verifyToken, getQuestionsByTag);
+
+// 📌 שאלות בפנדינג למאשרים בלבד
 router.get("/pending", verifyToken, verifyAdmin, async (req, res) => {
   try {
     const pendingQuestions = await Question.find({ status: "pending" });
@@ -104,5 +112,3 @@ router.get("/pending", verifyToken, verifyAdmin, async (req, res) => {
 });
 
 module.exports = router;
-// router.get("/by-tag/:tag", verifyToken ,getQuestionsByTag);
-// getQuestionsByTag
