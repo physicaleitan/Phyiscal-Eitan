@@ -104,17 +104,17 @@ exports.uploadQuestion = async (req, res) => {
   }
 };
 
-
 exports.uploadQuestionImage = async (req, res) => {
   try {
     console.log("📥 Received image upload request");
 
-    if (!req.file) {
-      console.log("❌ No file found in req.file");
+    if (!req.files || req.files.length === 0) {
+      console.log("❌ No file found in req.files");
       return res.status(400).json({ message: "No file uploaded" });
     }
 
-    console.log("📎 req.file:", req.file.originalname, req.file.size);
+    const file = req.files[0];
+    console.log("📎 file:", file.originalname, file.size);
 
     const { role } = req.user;
     const { type } = req.body;
@@ -123,7 +123,7 @@ exports.uploadQuestionImage = async (req, res) => {
       return res.status(400).json({ message: "Missing or invalid image type" });
     }
 
-    const uploadRes = await uploadImageToCloudinary(req.file.buffer, role, type);
+    const uploadRes = await uploadImageToCloudinary(file.buffer, role, type);
 
     res.status(200).json({
       url: uploadRes.secure_url,
