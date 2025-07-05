@@ -31,6 +31,10 @@ console.log("✅ Routes loaded!");
 // ✅ Image upload
 router.post("/upload-image", verifyToken, upload.any(), uploadQuestionImage);
 
+router.get('/questions/upload-image', (req, res) => {
+  res.status(405).json({ error: "GET not allowed on /upload-image" });
+});
+
 // 📌 אישור שאלה
 router.put("/approve", (req, res, next) => {
   console.log("✅ Request received at /approve");
