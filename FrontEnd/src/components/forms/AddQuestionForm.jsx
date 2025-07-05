@@ -103,7 +103,7 @@ const handleAnswerImageFileUpload = async (e, index) => {
   formDataUpload.append('isApproved', user.role === 'teacher' || user.role === 'admin');
 
   try {
-    const res = await fetch(`${BASE_URL}/api/questions/image/upload`, {
+    const res = await fetch(`${BASE_URL}/api/questions/upload-image`, {
       method: 'POST',
       headers: { Authorization: `Bearer ${user.token}` },
       body: formDataUpload
