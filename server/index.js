@@ -8,7 +8,7 @@ const app = express();
 
 
 const allowedOrigins = [
-  'https://phyiscal-eitan.vercel.app', // פרונט בפרודקשן
+  'https://physical-eitan.vercel.app', // פרונט בפרודקשן
   'http://localhost:3000'        // פיתוח מקומי
   
 ];
