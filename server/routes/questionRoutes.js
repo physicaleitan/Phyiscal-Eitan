@@ -29,7 +29,7 @@ const {
 console.log("✅ Routes loaded!");
 
 // ✅ Image upload
-router.post("/upload-image", verifyToken, upload.single("image"), uploadQuestionImage);
+router.post("/upload-image", verifyToken, upload.any(), uploadQuestionImage);
 
 // 📌 אישור שאלה
 router.put("/approve", (req, res, next) => {

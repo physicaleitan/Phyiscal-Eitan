@@ -117,7 +117,7 @@ exports.uploadQuestionImage = async (req, res) => {
     console.log("📎 req.file:", req.file.originalname, req.file.size);
 
     const { role } = req.user;
-    const { type } = req.body;
+    const file = req.files?.[0];
 
     if (!["question", "solution", "detailed"].includes(type)) {
       return res.status(400).json({ message: "Missing or invalid image type" });
