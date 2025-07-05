@@ -105,12 +105,16 @@ exports.uploadQuestion = async (req, res) => {
 };
 
 
-
 exports.uploadQuestionImage = async (req, res) => {
   try {
+    console.log("📥 Received image upload request");
+
     if (!req.file) {
+      console.log("❌ No file found in req.file");
       return res.status(400).json({ message: "No file uploaded" });
     }
+
+    console.log("📎 req.file:", req.file.originalname, req.file.size);
 
     const { role } = req.user;
     const { type } = req.body;
@@ -130,6 +134,7 @@ exports.uploadQuestionImage = async (req, res) => {
     res.status(500).json({ message: "Failed to upload image" });
   }
 };
+
 
 function extractPublicIdFromUrl(url) {
   try {
