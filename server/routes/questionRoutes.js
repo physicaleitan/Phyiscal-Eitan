@@ -82,20 +82,7 @@ router.get("/:id/next", async (req, res, next) => {
   }
 });
 
-// 📌 שליפת שאלה בודדת לפי ID
-router.get("/:id", async (req, res, next) => {
-  try {
-    const { id } = req.params;
-    let cachedQuestion = myCache.get(id);
-    if (cachedQuestion) {
-      console.log("Returning question from cache...");
-      return res.status(200).json(cachedQuestion);
-    }
-    await getQuestion(req, res);
-  } catch (error) {
-    next(error);
-  }
-});
+
 
 // 📌 שליפת שאלות לפי תגית
 router.get("/by-tag/:tag", verifyToken, getQuestionsByTag);
@@ -108,6 +95,21 @@ router.get("/pending", verifyToken, verifyAdmin, async (req, res) => {
   } catch (error) {
     console.error("❌ Error fetching pending questions:", error.message);
     res.status(500).json({ error: error.message });
+  }
+});
+
+// 📌 שליפת שאלה בודדת לפי ID
+router.get("/:id", async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    let cachedQuestion = myCache.get(id);
+    if (cachedQuestion) {
+      console.log("Returning question from cache...");
+      return res.status(200).json(cachedQuestion);
+    }
+    await getQuestion(req, res);
+  } catch (error) {
+    next(error);
   }
 });
 
