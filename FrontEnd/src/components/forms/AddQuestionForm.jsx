@@ -103,7 +103,7 @@ const handleAnswerImageFileUpload = async (e, index) => {
   formDataUpload.append('isApproved', user.role === 'teacher' || user.role === 'admin');
 
   try {
-    const res = await fetch(`${BASE_URL}/api/questions/upload-image`, {
+    const res = await fetch(`${BASE_URL}/api/questions/image/upload`, {
       method: 'POST',
       headers: { Authorization: `Bearer ${user.token}` },
       body: formDataUpload
@@ -130,7 +130,7 @@ const handleStepImageFileUpload = async (e, index) => {
   formDataUpload.append('isApproved', user.role === 'teacher' || user.role === 'admin');
 
   try {
-    const res = await fetch(`${BASE_URL}/api/questions/upload-image`, {
+    const res = await fetch(`${BASE_URL}/api/questions/image/upload`, {
       method: 'POST',
       headers: { Authorization: `Bearer ${user.token}` },
       body: formDataUpload
@@ -372,7 +372,7 @@ const uploadImage = async (file, type) => {
   formData.append('type', type); // ✅ add this line
   formData.append('isApproved', user.role === 'teacher' || user.role === 'admin');
 
-  const res = await fetch(`${BASE_URL}/api/questions/upload-image`, {
+  const res = await fetch(`${BASE_URL}/api/questions/image/upload`, {
     method: 'POST',
     headers: { Authorization: `Bearer ${user.token}` },
     body: formData
