@@ -9,6 +9,7 @@ const { verifyToken, verifyAdmin, verifyAdminOrTeacher } = require("../middlewar
 const myCache = require("../utils/cache");
 const Question = require("../models/Question");
 const {
+  uploadQuestionImage,
   uploadQuestion,
   deleteQuestion,
   editQuestion,
@@ -22,8 +23,7 @@ const {
   nextQuestion,
   getAllUnapprovedQuestions,
   getAllApprovedQuestions,
-  getQuestionsBySubject,
-  uploadQuestionImage
+  getQuestionsBySubject
 } = require("../controllers/questionController");
 
 console.log("✅ Routes loaded!");
