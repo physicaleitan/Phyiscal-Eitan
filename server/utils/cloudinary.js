@@ -1,4 +1,5 @@
 const cloudinary = require('cloudinary').v2;
+const streamifier = require("streamifier");
 require('dotenv').config();
 
 cloudinary.config({
@@ -14,18 +15,22 @@ cloudinary.config({
  * @param {string} type - 'question' | 'solution' | 'detailed'
  * @returns {Promise<{ secure_url: string, public_id: string }>}
  */
-async function uploadImageToCloudinary(filePath, role, type) {
+async function uploadImageToCloudinary(fileBuffer, role, type) {
   const isApproved = role === 'admin' || role === 'teacher';
   const folderPrefix = isApproved ? 'CLOUDINARY_FOLDER_APPROVED_' : 'CLOUDINARY_FOLDER_UNAPPROVED_';
-
   const envKey = `${folderPrefix}${type.toUpperCase()}`;
   const folder = process.env[envKey];
 
-  const uploadResult = await cloudinary.uploader.upload(filePath, {
-    folder,
+  return new Promise((resolve, reject) => {
+    const uploadStream = cloudinary.uploader.upload_stream(
+      { folder },
+      (error, result) => {
+        if (error) return reject(error);
+        resolve(result); // includes secure_url and public_id
+      }
+    );
+    streamifier.createReadStream(fileBuffer).pipe(uploadStream);
   });
-
-  return uploadResult; // includes secure_url and public_id
 }
 
 /**

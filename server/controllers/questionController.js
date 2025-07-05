@@ -30,9 +30,10 @@ exports.uploadQuestion = async (req, res) => {
 
     // ✅ Handle file upload (if sent)
     if (req.file) {
-      const uploadRes = await uploadImageToCloudinary(req.file.path, true);
+      const { role } = req.user;
+      const uploadRes = await uploadImageToCloudinary(req.file.buffer, role, "question");
+
       content.image = uploadRes.secure_url;
-      fs.unlinkSync(req.file.path); // remove temp file
     }
 
     // ✅ Validate content
@@ -118,8 +119,7 @@ exports.uploadQuestionImage = async (req, res) => {
       return res.status(400).json({ message: "Missing or invalid image type" });
     }
 
-    const uploadRes = await uploadImageToCloudinary(req.file.path, role, type);
-    fs.unlinkSync(req.file.path); // cleanup temp file
+    const uploadRes = await uploadImageToCloudinary(req.file.buffer, role, type);
 
     res.status(200).json({
       url: uploadRes.secure_url,

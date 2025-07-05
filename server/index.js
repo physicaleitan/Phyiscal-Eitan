@@ -9,22 +9,27 @@ const app = express();
 
 const allowedOrigins = [
   'https://phyiscal-eitan.vercel.app', // פרונט בפרודקשן
-  'http://localhost:3000'              // פיתוח מקומי
+  'http://localhost:3000'        // פיתוח מקומי
+  
 ];
 
 app.use(cors({
   origin: function (origin, callback) {
-    if (!origin || allowedOrigins.includes(origin)) {
+    if (!origin) return callback(null, true); // allow non-browser clients
+    if (
+      allowedOrigins.includes(origin) ||
+      origin.endsWith('.app.github.dev')
+    ) {
+      console.log("✅ CORS allowed for:", origin);
       callback(null, true);
     } else {
-      callback(new Error('Not allowed by CORS'));
+      console.log("❌ CORS blocked for:", origin);
+      callback(new Error('Not allowed by CORS: ' + origin));
     }
   },
   credentials: true,
 }));
-
 app.use(express.json());
-app.use(cors());
 
 mongoose
   .connect(process.env.MONGO_URI)

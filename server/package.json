@@ -23,7 +23,8 @@
     "mongoose": "^8.10.1",
     "multer": "^2.0.0",
     "node-cache": "^5.1.2",
-    "serverless-http": "^3.2.0"
+    "serverless-http": "^3.2.0",
+    "streamifier": "^0.1.1"
   },
   "devDependencies": {
     "jest": "^29.7.0",
