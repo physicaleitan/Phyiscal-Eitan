@@ -48,6 +48,21 @@ app.use("/api/subjects", subjectRoutes);
 
 
 
+app.options("*", cors({
+  origin: function (origin, callback) {
+    if (!origin) return callback(null, true);
+    if (
+      allowedOrigins.includes(origin) ||
+      origin.endsWith('.app.github.dev')
+    ) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS: ' + origin));
+    }
+  },
+  credentials: true,
+}));
+
 
 // הפעלת השרת
 module.exports = app;
