@@ -209,13 +209,7 @@ const fetchSolution = async () => {
       <CardContent className="pt-4">
         {/* Question Content */}
         <div className="mb-6">
-        <p
-          dir="rtl"
-          lang="he"
-          className="mb-4 text-gray-700 leading-relaxed whitespace-pre-line"
-        >
-          {questionContent.text}
-        </p>
+          <p className="mb-4 text-gray-700 leading-relaxed">{questionContent.text}</p>
           
           {questionContent.image && (
             console.log('🔍 questionContent.image:', questionContent.image),
@@ -349,15 +343,8 @@ const fetchSolution = async () => {
             </div>
 
             {answer.text && (
-              <p
-                dir="rtl"
-                lang="he"
-                className="text-blue-700 mb-2 whitespace-pre-line"
-              >
-                {answer.text}
-              </p>
-
-             )}
+              <p className="text-blue-700 mb-2">{answer.text}</p>
+            )}
 
             {answer.image && (
               <img
@@ -377,11 +364,7 @@ const fetchSolution = async () => {
 {showSolution && (
   <div className="mt-4 p-4 bg-green-50 rounded-lg">
     <h3 className="font-medium text-green-800 mb-2">פתרון:</h3>
-    <p
-      dir="rtl"
-      lang="he"
-      className="mb-4 text-gray-700 leading-relaxed whitespace-pre-line"
-    >{question.solution}</p>
+    <p className="text-green-700 mb-4">{question.solution}</p>
 
     {solutionSteps?.length > 0 && (
       <div className="mt-4">
@@ -399,16 +382,7 @@ const fetchSolution = async () => {
                   </div>
                 </div>
 
-                {step.text && (
-                  <p
-                    dir="rtl"
-                    lang="he"
-                    className="text-green-700 mb-2 whitespace-pre-line"
-                  >
-                    {step.text}
-                  </p>
-                )}
-
+                {step.text && <p className="text-green-700 mb-2">{step.text}</p>}
 
                 {step.image && (
                   <div className="mt-2">

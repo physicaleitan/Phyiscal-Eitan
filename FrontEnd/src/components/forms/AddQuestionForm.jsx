@@ -645,6 +645,7 @@ for (const [index, file] of Object.entries(imageFiles.stepImages)) {
                         dir="rtl"
                         lang="he"
                         className="flex-1"
+
                       />
                       <Button 
                         type="button" 
@@ -976,6 +977,7 @@ for (const [index, file] of Object.entries(imageFiles.stepImages)) {
                             dir="rtl"
                             lang="he"
                             className="h-24"
+
                           />
                         </div>
                       )}
