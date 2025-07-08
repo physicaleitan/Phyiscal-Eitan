@@ -8,18 +8,17 @@ const app = express();
 
 
 const allowedOrigins = [
-  'https://phyiscal-eitan.vercel.app', // פרונט בפרודקשן
+  'https://phyiscal-eitan.vercel.app',
   'https://physical-eitan.vercel.app',
-  'https://front-8204oamud-eitan-physics-projects.vercel.app',
-  'http://localhost:3000'        // פיתוח מקומי
-  
+  'http://localhost:3000'
 ];
 
 app.use(cors({
   origin: function (origin, callback) {
-    if (!origin) return callback(null, true); // allow non-browser clients
+    if (!origin) return callback(null, true);
     if (
       allowedOrigins.includes(origin) ||
+      origin.endsWith('.vercel.app') || // 🟢 הוספת כלל גנרי
       origin.endsWith('.app.github.dev')
     ) {
       console.log("✅ CORS allowed for:", origin);
