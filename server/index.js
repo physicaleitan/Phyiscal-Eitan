@@ -9,6 +9,7 @@ const app = express();
 
 const allowedOrigins = [
   'https://phyiscal-eitan.vercel.app', // פרונט בפרודקשן
+  'https://physical-eitan.vercel.app',
   'https://front-8204oamud-eitan-physics-projects.vercel.app',
   'http://localhost:3000'        // פיתוח מקומי
   
