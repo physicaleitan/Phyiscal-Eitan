@@ -528,6 +528,8 @@ for (const [index, file] of Object.entries(imageFiles.stepImages)) {
                     placeholder="הכנס את תוכן השאלה"
                     className="mt-1 h-24"
                     required
+                    dir="rtl"
+                    lang="he"
                   />
                 </div>
                 
@@ -640,6 +642,8 @@ for (const [index, file] of Object.entries(imageFiles.stepImages)) {
                         value={hint}
                         onChange={(e) => handleHintChange(index, e.target.value)}
                         placeholder={`רמז ${index + 1}`}
+                        dir="rtl"
+                        lang="he"
                         className="flex-1"
                       />
                       <Button 
@@ -676,6 +680,8 @@ for (const [index, file] of Object.entries(imageFiles.stepImages)) {
                         value={tag}
                         onChange={(e) => handleTagChange(index, e.target.value)}
                         placeholder={`תגית ${index + 1}`}
+                        dir="rtl"
+                        lang="he"
                         className="flex-1"
                       />
                       <Button 
@@ -773,6 +779,8 @@ for (const [index, file] of Object.entries(imageFiles.stepImages)) {
                             value={answer.text || ''}
                             onChange={(e) => handleCorrectAnswerChange(index, 'text', e.target.value)}
                             placeholder="הכנס את התשובה הנכונה"
+                            dir="rtl"
+                            lang="he"
                           />
                         </div>
                       )}
@@ -896,6 +904,8 @@ for (const [index, file] of Object.entries(imageFiles.stepImages)) {
                     placeholder="הכנס את הפתרון המלא לשאלה"
                     className="mt-1 h-24"
                     required
+                    dir="rtl"
+                    lang="he"
                   />
                 </div>
                 
@@ -963,6 +973,8 @@ for (const [index, file] of Object.entries(imageFiles.stepImages)) {
                             value={step.text || ''}
                             onChange={(e) => handleSolutionStepChange(index, 'text', e.target.value)}
                             placeholder="הסבר לשלב זה"
+                            dir="rtl"
+                            lang="he"
                             className="h-24"
                           />
                         </div>
