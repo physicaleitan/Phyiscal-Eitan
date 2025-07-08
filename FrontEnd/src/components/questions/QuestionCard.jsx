@@ -304,7 +304,18 @@ const fetchSolution = async () => {
               <h3 className="font-medium text-amber-800 mb-2">רמזים:</h3>
               <ul className="list-disc list-inside space-y-2">
                 {question.hints.slice(0, shownHints).map((hint, index) => (
-                  <li key={index} className="text-amber-700">{hint}</li>
+                  <li
+                    key={index}
+                    className="text-amber-700"
+                    style={{
+                      whiteSpace: "pre-wrap",
+                      direction: "ltr",
+                      textAlign: "right",
+                      lineHeight: "1.8",
+                    }}
+                  >
+                    {hint}
+                  </li>
                 ))}
               </ul>
 
@@ -342,9 +353,20 @@ const fetchSolution = async () => {
               </span>
             </div>
 
-            {answer.text && (
-              <p className="text-blue-700 mb-2">{answer.text}</p>
-            )}
+              {answer.text && (
+                <div
+                  className="text-blue-700 mb-2"
+                  style={{
+                    whiteSpace: "pre-wrap",
+                    direction: "ltr",
+                    textAlign: "right",
+                    lineHeight: "1.8",
+                  }}
+                >
+                  {answer.text}
+                </div>
+              )}
+
 
             {answer.image && (
               <img
@@ -364,7 +386,18 @@ const fetchSolution = async () => {
 {showSolution && (
   <div className="mt-4 p-4 bg-green-50 rounded-lg">
     <h3 className="font-medium text-green-800 mb-2">פתרון:</h3>
-    <p className="text-green-700 mb-4">{question.solution}</p>
+          <div
+        className="text-green-700 mb-4"
+        style={{
+          whiteSpace: "pre-wrap",
+          direction: "ltr",
+          textAlign: "right",
+          lineHeight: "1.8",
+        }}
+      >
+        {question.solution}
+      </div>
+
 
     {solutionSteps?.length > 0 && (
       <div className="mt-4">
@@ -382,7 +415,20 @@ const fetchSolution = async () => {
                   </div>
                 </div>
 
-                {step.text && <p className="text-green-700 mb-2">{step.text}</p>}
+                {step.text && (
+                  <div
+                    className="text-green-700 mb-2"
+                    style={{
+                      whiteSpace: "pre-wrap",
+                      direction: "ltr",
+                      textAlign: "right",
+                      lineHeight: "1.8",
+                    }}
+                  >
+                    {step.text}
+                  </div>
+                )}
+
 
                 {step.image && (
                   <div className="mt-2">
