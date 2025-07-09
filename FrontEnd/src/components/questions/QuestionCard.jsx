@@ -37,6 +37,14 @@ const getYouTubeEmbedUrl = (url) => {
   return url; // Return original URL if it's not a YouTube link
 };
 
+function formatTextWithMixedDirection(text) {
+  if (!text) return "";
+
+  // עוטף נוסחאות באנגלית / לטינית בתוך <span dir="ltr">
+  return text.replace(/([A-Za-z][A-Za-z0-9\-+*/^=().]*)/g, '<span dir="ltr">$1</span>');
+}
+
+
 export default function QuestionCard({ question, user }) {
   const [isVideoOpen, setIsVideoOpen] = useState(false);
   const [isImageOpen, setIsImageOpen] = useState(false);
@@ -358,13 +366,15 @@ const fetchSolution = async () => {
                   className="text-blue-700 mb-2"
                   style={{
                     whiteSpace: "pre-wrap",
-                    direction: "ltr",
+                    direction: "rtl",
                     textAlign: "right",
                     lineHeight: "1.8",
                   }}
-                >
-                  {answer.text}
-                </div>
+                  dangerouslySetInnerHTML={{
+                    __html: formatTextWithMixedDirection(answer.text),
+                  }}
+                ></div>
+
               )}
 
 
@@ -386,17 +396,19 @@ const fetchSolution = async () => {
 {showSolution && (
   <div className="mt-4 p-4 bg-green-50 rounded-lg">
     <h3 className="font-medium text-green-800 mb-2">פתרון:</h3>
-          <div
+      <div
         className="text-green-700 mb-4"
         style={{
           whiteSpace: "pre-wrap",
-          direction: "ltr",
+          direction: "rtl",
           textAlign: "right",
           lineHeight: "1.8",
         }}
-      >
-        {question.solution}
-      </div>
+        dangerouslySetInnerHTML={{
+          __html: formatTextWithMixedDirection(question.solution),
+        }}
+      ></div>
+
 
 
     {solutionSteps?.length > 0 && (
@@ -420,13 +432,14 @@ const fetchSolution = async () => {
                     className="text-green-700 mb-2"
                     style={{
                       whiteSpace: "pre-wrap",
-                      direction: "ltr",
+                      direction: "rtl",
                       textAlign: "right",
                       lineHeight: "1.8",
                     }}
-                  >
-                    {step.text}
-                  </div>
+                    dangerouslySetInnerHTML={{
+                      __html: formatTextWithMixedDirection(step.text),
+                    }}
+                  ></div>
                 )}
 
 
