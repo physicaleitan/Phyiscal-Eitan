@@ -217,7 +217,19 @@ const fetchSolution = async () => {
       <CardContent className="pt-4">
         {/* Question Content */}
         <div className="mb-6">
-          <p className="mb-4 text-gray-700 leading-relaxed">{questionContent.text}</p>
+          <div
+            className="mb-4 text-gray-700"
+            style={{
+              whiteSpace: "pre-wrap",
+              direction: "rtl",
+              textAlign: "right",
+              lineHeight: "1.8",
+            }}
+            dangerouslySetInnerHTML={{
+              __html: formatTextWithMixedDirection(questionContent.text),
+            }}
+          ></div>
+
           
           {questionContent.image && (
             console.log('🔍 questionContent.image:', questionContent.image),
