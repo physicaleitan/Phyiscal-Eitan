@@ -6,6 +6,7 @@ const cors = require("cors");
 // יצירת אפליקציה של Express
 const app = express();
 
+app.set('trust proxy', 1);
 
 const allowedOrigins = [
   'https://phyiscal-eitan.vercel.app',
