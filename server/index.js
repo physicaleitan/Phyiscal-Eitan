@@ -1,9 +1,8 @@
 require("dotenv").config();
 const express = require("express");
-const mongoose = require("mongoose");
+const connectDB = require("./utils/db");
 const cors = require("cors");
 
-// יצירת אפליקציה של Express
 const app = express();
 
 app.set('trust proxy', 1);
@@ -19,7 +18,7 @@ app.use(cors({
     if (!origin) return callback(null, true);
     if (
       allowedOrigins.includes(origin) ||
-      origin.endsWith('.vercel.app') || // 🟢 הוספת כלל גנרי
+      origin.endsWith('.vercel.app') ||
       origin.endsWith('.app.github.dev')
     ) {
       console.log("✅ CORS allowed for:", origin);
@@ -33,15 +32,10 @@ app.use(cors({
 }));
 app.use(express.json());
 
-mongoose
-  .connect(process.env.MONGO_URI, {
-    serverSelectionTimeoutMS: 10000, // 10 שניות timeout
-  })
-  .then(() => console.log("✅ Connected to MongoDB"))
-  .catch((error) => console.error("❌ MongoDB Connection Error:", error));
+// ✅ Connect to MongoDB at app start
+connectDB();
 
-
-// הגדרת נתיבי API
+// ✅ Define routes after DB connection
 const questionRoutes = require("./routes/questionRoutes");
 app.use("/api/questions", questionRoutes);
 
@@ -51,10 +45,4 @@ app.use("/api/users", userRoutes);
 const subjectRoutes = require("./routes/subjectRoutes");
 app.use("/api/subjects", subjectRoutes);
 
-
-
-
-// הפעלת השרת
 module.exports = app;
-const serverless = require("serverless-http");
-module.exports.handler = serverless(app);
